@@ -42,13 +42,13 @@ Note: This readme file only provides an overview of the work done. Please check 
 
 #### Baseline Evaluation 
 
-| Model       | Accuracy | Inference Time | 
-|-------------|----------|----------------|
-| BLIP        | 30%      | 1.02s          | 
-| InstructBLIP| 68%      | 6.8s           | 
-| CLIP        | 34%      | 0.6s           |
-| OWL-ViT     | 29%      | 2.9s           | 
-| LiteBLIP    | 72%      | 6.9s           |
+
+| Model        | Accuracy | Precision (M) | Recall (M) | F1 Score (M) | BERT Precision | BERT Recall | BERT F1 | BARTScore |
+|--------------|----------|---------------|------------|--------------|----------------|-------------|---------|-----------|
+| ViLT         | 0.2777   | 0.0510        | 0.0585     | 0.0452       | 0.6376         | 0.6286      | 0.6314  | -5.4490   |
+| BLIP         | 0.3652   | 0.0465        | 0.0497     | 0.0426       | 0.5334         | 0.4979      | 0.5120  | -5.6331   |
+
+
 
 #### Fine-Tuning
 - Approach: Basic ViLT + LoRA (Rank=4)
