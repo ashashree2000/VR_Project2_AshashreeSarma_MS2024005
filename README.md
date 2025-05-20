@@ -5,7 +5,6 @@
 
 This project entails the development of a **Visual Question Answering (VQA)** system tailored for **e-commerce products**, using the **Amazon Berkeley Objects (ABO)** dataset. The goal was to build a multimodal pipeline that can answer product-related visual questions through a combination of curated metadata, images, and fine-tuned vision-language models.
 
-![Dataset distribution table](Classification/Images/data_distribution.png)
 Project Flow:
 ```mermaid
 graph LR
