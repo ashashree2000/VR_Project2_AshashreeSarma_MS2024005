@@ -52,7 +52,7 @@ To gain insights from the curated dataset, we performed an initial exploratory a
 
 
 ### Most Common Colors
-![Most Common Colors](Report/Images/most_common_colors.png)
+![Most Common Colors](Report/Images/Most_common_categories.png)
 
 
 
