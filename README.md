@@ -43,38 +43,6 @@ Through two systematic iterations, we improved data quality and model performanc
 As per the deliverables mentioned in the problem statement document, we have created a comprehensive report of the project as well as provided Inference Script in the namesake folder. 
 Note: This readme file only provides an overview of the work done. Please check the attached report for getting in detail information about the project.
 
-##Exploratory Data Analysis (EDA)
-
-To gain insights from the curated dataset, we performed an initial exploratory analysis. Here are key visualizations derived from our VQA pairs:
-
-<p float="left">
-  <img src="Report/Most_common_categories.png" width="500" />
-  <img src="results/Coin Segmentation.png" width="500" />
-</p>
-
-### Most Common Categories
-
-
-
-### Most Common Colors
-
-
-
-
-### Most Common Questions
-
-
-
-### Top Answers for a Question
-
-
-
-### Top Question Start Patterns
-
-
-
-These insights helped refine our prompt engineering strategy and provided evidence for balancing samples across categories and attributes.
-
 
 ## Methodology
 
