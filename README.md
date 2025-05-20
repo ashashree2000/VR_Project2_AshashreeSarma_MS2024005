@@ -1,6 +1,9 @@
-# VR Project-2 by: AnweshNayak_MS20224003, AshashreeSarma_MS2024005, RishitaPatel_MS2024016
-## Introduction
-This project entails development of a Visual Question Answering (VQA) system for e-commerce products using the Amazon Berkeley Objects (ABO) dataset. 
+# VR Project-2  
+**By: Anwesh Nayak (MS20224003), Ashashree Sarma (MS2024005), Rishita Patel (MS2024016)**
+
+## 🧠 Introduction
+
+This project entails the development of a **Visual Question Answering (VQA)** system tailored for **e-commerce products**, using the **Amazon Berkeley Objects (ABO)** dataset. The goal was to build a multimodal pipeline that can answer product-related visual questions through a combination of curated metadata, images, and fine-tuned vision-language models.
 
 Project Flow:
 ```mermaid
@@ -46,7 +49,7 @@ Note: This readme file only provides an overview of the work done. Please check 
 
 
 ### Data Curation
-
+We adopted a two-stage iterative approach to curate a high-quality VQA dataset.
 
 #### Iteration 1: 
 
@@ -82,7 +85,9 @@ Note: This readme file only provides an overview of the work done. Please check 
 | "navy"     | "#000080"        |
 | "yes"      | "True"           | 
 
-#### Final Prompt
+#### Final Prompt - Inspired from Chain of Thoughts (Used with Gemini API):
+
+ 
 ```
     Based on the product present in the image and producnt information present in the metadata related to the image provided generate multiple choice questions.
     These questions should be answerable purely based on the image and visual features, the metadata should be strictly used as a helping aid to generate the questions.
@@ -140,6 +145,12 @@ Note: This readme file only provides an overview of the work done. Please check 
 
 ### Baseline Evaluation 
 
+We evaluated two pre-trained vision-language models without any fine-tuning:
+
+- ViLT (dandelin/vilt-b32-mlm)
+
+- BLIP (Salesforce/blip-vqa-base)
+
 
 | Model        | Accuracy | Precision (M) | Recall (M) | F1 Score (M) | BERT Precision | BERT Recall | BERT F1 | BARTScore |
 |--------------|----------|---------------|------------|--------------|----------------|-------------|---------|-----------|
@@ -148,7 +159,7 @@ Note: This readme file only provides an overview of the work done. Please check 
 
 
 
-### Fine-Tuning
+### Fine-Tuning with LoRA
 
 ##### BLIP+LoRA Configuration
 
@@ -207,3 +218,40 @@ Note: This readme file only provides an overview of the work done. Please check 
 |--------------|----------|---------------|------------|--------------|----------------|-------------|---------|-----------|
 | ViLT         | 0.6231   | 0.3336        | 0.3432     | 0.3159       | 0.8163         | 0.8141      | 0.8143  | -3.8496   |
 | BLIP         | 0.4652   | 0.1237        | 0.1465     | 0.1144       | 0.5046         | 0.5409      | 0.5187  | -5.3818   |
+
+
+## Evaluation Metrics
+
+#### Standard:
+
+- Accuracy (exact match)
+
+- F1 Score, Precision, Recall
+
+#### Advanced:
+
+- BERTScore: Measures semantic similarity.
+
+- BARTScore: Text generation quality assessment.
+
+## Inference
+
+A clean inference script (inference.py) is provided. This script loads the fine-tuned model and answers new multiple-choice VQA queries.
+
+## Final Deliverables
+
+✅ Curated VQA Dataset (VQA.csv, VQA_dict.json)
+
+✅ Codebase for data curation, training, evaluation
+
+✅ LoRA fine-tuned models (via HuggingFace PEFT)
+
+✅ Report with insights and visuals (Report.pdf)
+
+✅ Evaluation using standard + advanced metrics
+
+✅ Working inference script for API-style usage
+
+## License
+
+This project is for academic coursework (AIM825, Spring 2025) and adheres to academic integrity policies. All models and datasets used comply with their respective licenses.
