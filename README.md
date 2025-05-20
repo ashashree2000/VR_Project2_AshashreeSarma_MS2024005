@@ -51,19 +51,11 @@ Note: This readme file only provides an overview of the work done. Please check 
 
 
 #### Fine-Tuning
-- Approach: Basic ViLT + LoRA (Rank=4)
 
-| Metric         | Value  |
-| -------------- | ------ |
-| Loss           | 1.2991 |
-| Accuracy       | 0.4617 |
-| F1 Score       | 0.6317 |
-| BERT Precision | 0.9696 |
-| BERT Recall    | 0.9661 |
-| BERT F1        | 0.9676 |
-| BART Precision | 0.9696 |
-| BART Recall    | 0.9661 |
-| BART F1        | 0.9676 |
+| Model        | Accuracy | Precision (M) | Recall (M) | F1 Score (M) | BERT Precision | BERT Recall | BERT F1 | BARTScore |
+|--------------|----------|---------------|------------|--------------|----------------|-------------|---------|-----------|
+| ViLT         | 0.6231   | 0.3336        | 0.3432     | 0.3159       | 0.8163         | 0.8141      | 0.8143  | -3.8496   |
+| BLIP         | 0.4652   | 0.1237        | 0.1465     | 0.1144       | 0.5046         | 0.5409      | 0.5187  | -5.3818   |
 
 
 Limitations:
@@ -97,16 +89,7 @@ Limitations:
 | "navy"     | "#000080"        |
 | "yes"      | "True"           |
 
-#### Baseline Evaluation
 
-| Model                   | Accuracy | Precision | Recall | F1   | BERT-F1 | ROUGE-1 | BLEU  | METEOR | Avg Time (s) |
-|-------------------------|----------|-----------|--------|------|---------|---------|-------|--------|---------------|
-| clip-vit-base-patch32   | 0.50     | 0.36      | 0.32   | 0.33 | 0.98    | 0.60    | 0.55  | 0.39   | 0.33          |
-| blip2-flan-t5-xl        | 0.40     | 0.25      | 0.25   | 0.25 | 0.96    | 0.50    | 0.45  | 0.25   | 2.04          |
-| clip-vit-base-patch32   | 0.50     | 0.36      | 0.32   | 0.33 | 0.98    | 0.60    | 0.55  | 0.39   | 0.33          |
-| clip-vit-large-patch14  | 0.30     | 0.19      | 0.19   | 0.19 | 0.93    | 0.30    | 0.30  | 0.28   | 0.36          |
-| blip2-opt-1.7b          | 0.20     | 0.09      | 0.13   | 0.10 | 0.96    | 0.20    | 0.20  | 0.10   | 0.52          |
-| instructblip-flan-t5-xl | 0.10     | 0.06      | 0.06   | 0.06 | 0.98    | 0.10    | 0.10  | 0.10   | 3.40          |
 
 
 #### Fine-Tuning
