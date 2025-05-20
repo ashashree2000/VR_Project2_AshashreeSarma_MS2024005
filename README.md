@@ -48,7 +48,7 @@ Note: This readme file only provides an overview of the work done. Please check 
 To gain insights from the curated dataset, we performed an initial exploratory analysis. Here are key visualizations derived from our VQA pairs:
 
 <p float="left">
-  <img src="Report/images.png" width="500" />
+  <img src="Report/Most_common_categories.png" width="500" />
   <img src="results/Coin Segmentation.png" width="500" />
 </p>
 
