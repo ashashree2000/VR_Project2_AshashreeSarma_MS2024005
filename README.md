@@ -29,9 +29,13 @@ Note: This readme file only provides an overview of the work done. Please check 
 
 ## Methodology
 
-### Iteration 1: Foundational Implementation
 
-#### Data Curation
+
+### Data Curation
+
+
+#### Iteration 1: 
+
 - Retained raw multilingual entries from ABO dataset
 - Non-uniform category distribution (bias toward certain categories)
 - Basic question templates:
@@ -39,44 +43,19 @@ Note: This readme file only provides an overview of the work done. Please check 
   - "What color is this item?"
 - Randomly sampled a subset of ABO dataset 
 - QA pairs generation using Gemini 2.0 Flash API (3 pairs per datapoint)
+- 
 
-#### Baseline Evaluation 
+#### Iteration 2: 
 
-
-| Model        | Accuracy | Precision (M) | Recall (M) | F1 Score (M) | BERT Precision | BERT Recall | BERT F1 | BARTScore |
-|--------------|----------|---------------|------------|--------------|----------------|-------------|---------|-----------|
-| ViLT         | 0.2777   | 0.0510        | 0.0585     | 0.0452       | 0.6376         | 0.6286      | 0.6314  | -5.4490   |
-| BLIP         | 0.3652   | 0.0465        | 0.0497     | 0.0426       | 0.5334         | 0.4979      | 0.5120  | -5.6331   |
-
-
-
-#### Fine-Tuning
-
-| Model        | Accuracy | Precision (M) | Recall (M) | F1 Score (M) | BERT Precision | BERT Recall | BERT F1 | BARTScore |
-|--------------|----------|---------------|------------|--------------|----------------|-------------|---------|-----------|
-| ViLT         | 0.6231   | 0.3336        | 0.3432     | 0.3159       | 0.8163         | 0.8141      | 0.8143  | -3.8496   |
-| BLIP         | 0.4652   | 0.1237        | 0.1465     | 0.1144       | 0.5046         | 0.5409      | 0.5187  | -5.3818   |
-
-
-Limitations:
-- No answer normalization
-- Overfitting on dominant categories
-- Semantic inconsistency in predictions
-
----
-
-### Iteration 2: Enhanced Pipeline
-
-#### Improved Data Curation
 
 - Extracted English-only data from the ABO dataset
-
+  
 - Column Selection: Kept only VQA-relevant fields:
   - item_name
   - bullet_point 
   - color 
-  - node 
-
+  - node
+    
 - Balanced Sampling:
   - 100 samples per product category (where available)
   - Minimum 5 samples for rare categories
@@ -87,40 +66,89 @@ Limitations:
 |------------|------------------|
 | "two"      | "2"              |
 | "navy"     | "#000080"        |
-| "yes"      | "True"           |
+| "yes"      | "True"           | 
 
 
 
+### Baseline Evaluation 
 
-#### Fine-Tuning
+
+| Model        | Accuracy | Precision (M) | Recall (M) | F1 Score (M) | BERT Precision | BERT Recall | BERT F1 | BARTScore |
+|--------------|----------|---------------|------------|--------------|----------------|-------------|---------|-----------|
+| ViLT         | 0.2777   | 0.0510        | 0.0585     | 0.0452       | 0.6376         | 0.6286      | 0.6314  | -5.4490   |
+| BLIP         | 0.3652   | 0.0465        | 0.0497     | 0.0426       | 0.5334         | 0.4979      | 0.5120  | -5.6331   |
+
+
+
+### Fine-Tuning
+
+##### BLIP+LoRA Configuration
+
+**•⁠ LoRA Parameters:**
+- **Rank:** 16  
+- **Target Modules:** `query`, `value`  
+- **Alpha:** 32  
+- **Dropout:** 0.1  
+
+**•⁠ Training Protocol:**
+- **Dataset:** VQA-style, 60% sample used  
+- **Split:** 80% training, 20% validation  
+- **Batch Size:** 8  
+- **Backbone Model:** `Salesforce/blip-vqa-base`  
+- **LoRA Framework:** Integrated using `peft.LoraConfig`  
+
+> _Note: Epoch-wise protocol was not explicitly defined in the notebook. This setup assumes standard LoRA fine-tuning with PEFT._
+
+**•⁠ Key Enhancements (Implied):**
+- LoRA applied to transformer attention (`query`, `value`) layers  
+- Mixed-precision likely (FP16 assumed, though not explicitly shown)  
+- BLIP processor and model from HuggingFace  
+- Image-question-answer mapping from JSON used for dataset creation  
+
 
 ##### ViLT+LoRA Configuration
 
-- LoRA Parameters:
-  - Rank: 8
-  - Target Modules: Query/Value projections
-  - Alpha: 32
-  - Dropout: 0.1
+**•⁠ LoRA Parameters:**
+- **Rank:** *Not explicitly defined*  
+- **Target Modules:** *LoRA not applied in this notebook*  
+- **Alpha:** *N/A*  
+- **Dropout:** *Not applied via LoRA*
 
-- Training Protocol:
-  - Phase 1 (Epochs 1–3):
-    - Frozen backbone
-    - Train only classifier + LoRA adapters
-    - Learning rate: 5e-5
-  
-  - Phase 2 (Epochs 4–10):
-    - Unfreeze top 3 transformer layers
-    - Learning rate: 1e-5
-    - Add gradient clipping (max norm=1.0)
+> **Note:** This configuration does not implement LoRA. Instead, it directly fine-tunes a pretrained ViLT model (`dandelin/vilt-b32-mlm`) for multiple-choice question answering.
 
-- Key Enhancements:
-  - Dynamic answer embedding lookup
-  - Question-type weighted loss function
-  - FP16 mixed-precision training
+**•⁠ Training Protocol:**
+- **Dataset:** Custom VQA dataset loaded from JSON (with image-question-answer mapping)
+- **Split:** 70% train, 15% validation, 15% test
+- **Batch Size:** 8
+- **Backbone Model:** `dandelin/vilt-b32-mlm`
+- **Model Used:** `ViltForQuestionAnswering` and a custom `ViltForMultipleChoice` wrapper
+- **Optimizer:** AdamW
+- **Learning Rate:** `5e-5`
+- **Epochs:** 3
+- **Device:** GPU if available, else CPU
 
-Performance Comparison
+**•⁠ Key Enhancements:**
+- Custom dataset wrapper for multiple-choice questions
+- `ViltProcessor` used to encode both image and text
+- Fine-tuning includes a classification head added on top of pooled ViLT output
+- CrossEntropyLoss used for training
 
-| Model             | Accuracy | F1 Score | BERTScore | Inference Time |
-|------------------|----------|----------|-----------|----------------|
-| Iteration 1 BLIP | 51.43%   | 0.243    | 0.524     | 2.6s           |
-| Iteration 2 ViLT | 56.92%   | 0.552    | 0.763     | 3.2s           |
+
+
+| Model        | Accuracy | Precision (M) | Recall (M) | F1 Score (M) | BERT Precision | BERT Recall | BERT F1 | BARTScore |
+|--------------|----------|---------------|------------|--------------|----------------|-------------|---------|-----------|
+| ViLT         | 0.6231   | 0.3336        | 0.3432     | 0.3159       | 0.8163         | 0.8141      | 0.8143  | -3.8496   |
+| BLIP         | 0.4652   | 0.1237        | 0.1465     | 0.1144       | 0.5046         | 0.5409      | 0.5187  | -5.3818   |
+
+
+
+
+
+
+
+
+
+
+
+
+
