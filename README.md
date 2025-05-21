@@ -1,7 +1,6 @@
 # VR Project-2  
 **By: Anwesh Nayak (MS20224003), Ashashree Sarma (MS2024005), Rishita Patel (MS2024016)**
 
-![Most Common Categories](Report/images/Most%20common%20categories.png)
 
 
 ##  Introduction
