@@ -1,6 +1,9 @@
 # VR Project-2  
 **By: Anwesh Nayak (MS20224003), Ashashree Sarma (MS2024005), Rishita Patel (MS2024016)**
 
+![Most Common Categories](Report/images/Most%20common%20categories.png)
+
+
 ##  Introduction
 
 This project entails the development of a **Visual Question Answering (VQA)** system tailored for **e-commerce products**, using the **Amazon Berkeley Objects (ABO)** dataset. The goal was to build a multimodal pipeline that can answer product-related visual questions through a combination of curated metadata, images, and fine-tuned vision-language models.
