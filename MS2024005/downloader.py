@@ -10,7 +10,7 @@ Example usage:
 from downloader import download_and_extract
 
 # Example usage:
-zip_url = "https://huggingface.co/kushaaagr/Vilt-finetuned-for-VQA/resolve/main/vilt-finetuned-vqa-15.zip"
+zip_url = "https://huggingface.co/anwehsan/Vilt-finetuned/blob/main/VILT_best.zip"
 output_directory = "."
 extracted_path = download_and_extract(zip_url, output_directory)
 
@@ -79,7 +79,7 @@ if __name__ == "__main__":
     os.chdir(script_dir)
     print("Current Working Directory:", os.getcwd())
     # Example for a zip file
-    zip_url = "https://huggingface.co/kushaaagr/Vilt-finetuned-for-VQA/resolve/main/vilt-finetuned-vqa-15.zip"
+    zip_url = "https://huggingface.co/anwehsan/Vilt-finetuned/blob/main/VILT_best.zip"
     # zip_output_dir = "finetuned-vilt"
     zip_output_dir = "."
     download_and_extract(zip_url, zip_output_dir)
